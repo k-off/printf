@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 17:53:14 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/03 10:59:38 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/09 22:17:26 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,7 +299,6 @@ char	**ft_split(char const *s, char c);
 /**
  * @brief Allocates (with malloc(3)) and returns a string
 		representing the integer received as an argument.
-		Negative numbers must be handled.
  * @param n: the integer to convert.
  * @return The string representing the integer.
 		NULL if the allocation fails.

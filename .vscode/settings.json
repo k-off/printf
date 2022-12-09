@@ -1,0 +1,18 @@
+{
+    "editor.tabSize": 4,
+    "editor.insertSpaces": false,
+    "editor.detectIndentation": true,
+    "editor.rulers": [80,120],
+    "workbench.colorCustomizations": {
+        "editorRuler.foreground": "#880088"
+    },
+    "files.associations": {
+      "ft.h": "c",
+      "header.h": "c",
+      "stdlib.h": "c",
+      "stddef.h": "c",
+      "stdio.h": "c",
+      "libftprintf.h": "c",
+      "limits.h": "c"
+    }
+}

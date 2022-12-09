@@ -1,6 +1,6 @@
 NAME=libftprintf.a
 
-CFLAGS=-Wall -Wextra -Werror -pedantic $(BONUSFLAG)
+CFLAGS=-Wall -Wextra -Werror -pedantic $(BONUSFLAG) -g3
 
 AR=ar -rc
 
@@ -10,7 +10,7 @@ HDR=-Iinclude -Ilibft/include
 OBJDIR=obj
 SRCDIR=src
 
-SRC= ft_printf.c
+SRC= ft_memalloc.c ft_ntoa_base.c ft_printf.c string_joiner.c
 
 BSRC = 
 
@@ -49,9 +49,8 @@ so:
 
 re: fclean all
 
-test: bonus
-	@$(CC) -I$(HDR) -c tests/main.c -o tests/main.o
-	@$(CC) -o test tests/main.o libft.a
-	./test
+test: re
+	@$(CC) -I$(HDR) -c tests/main.c -o obj/main.o
+	@$(CC) -o test obj/main.o libftprintf.a libft/libft.a
 
 .PHONY: all clean fclean re bonus
