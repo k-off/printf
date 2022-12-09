@@ -13,7 +13,7 @@ SRCDIR=src
 SRC= manage_memory.c ft_ntoa_base.c ft_printf.c string_joiner.c \
 	ft_dbltostr_base.c parse_format.c parse_format_utils.c \
 	handle_conversions.c handle_double_conversion.c handle_string_conversion.c \
-	handle_integer_conversion.c handle_double_utils.c
+	handle_integer_conversion.c handle_double_utils.c handle_integer_utils.c
 
 BSRC = 
 
@@ -50,10 +50,6 @@ fclean: clean
 	make fclean -C libft
 	rm -f $(NAME)
 	rm -f test
-
-so:
-	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SRC) $(BSRC)
-	gcc -nostartfiles -shared -o libft.so $(OBJ) $(BOBJ)
 
 re: fclean all
 
