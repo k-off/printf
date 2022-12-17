@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 21:28:48 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/09 22:16:34 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/17 14:09:57 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,4 @@ char	*lltoa_base(int64_t n, int base, t_bool upper_case, int8_t grp_thsnd)
 	else
 		return (string_joiner(2, ft_strdup("-"), \
 			ulltoa_base(-n, base, upper_case, grp_thsnd)));
-}
-
-
-char	*dbltoa_base(long double n, int base, t_bool upper_case, int64_t prec)
-{
-	// long double tmp;
-	// uint64_t	int_side[5];
-	(void)n;
-	(void)base;
-	(void)upper_case;
-	(void)prec;
-
-	return (NULL);
 }

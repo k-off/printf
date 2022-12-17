@@ -10,7 +10,7 @@ HDR=-Iinclude -Ilibft/include
 OBJDIR=obj
 SRCDIR=src
 
-SRC= ft_memalloc.c ft_ntoa_base.c ft_printf.c string_joiner.c
+SRC= ft_memalloc.c ft_ntoa_base.c ft_printf.c string_joiner.c ft_dbltostr_base.c
 
 BSRC = 
 

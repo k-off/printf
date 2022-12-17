@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 22:38:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/09 23:28:54 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/17 19:00:23 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char	*string_joiner(size_t n, ...)
 	va_start(v, n);
 	while (i < n)
 		arr[i++] = va_arg(v, char *);
+		
 	total_len = 0;
 	while (i)
 		if (arr[--i])

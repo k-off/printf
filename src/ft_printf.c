@@ -20,14 +20,3 @@
 //     va_end(v);
 //     return 0;
 // }
-#include <stdio.h>
-int main() {
-    float f = 4.0;
-    double d = 8.0;
-    long double l = 16.0;
-    l *=l;
-    printf("%f, %f, %#Lf\n", f, d, l);
-    int i = 5;
-    printf("%hhd, %hd, %d, %ld, %lld\n", i, i, i, (long)i, (long long)i);
-    return 0;
-}
