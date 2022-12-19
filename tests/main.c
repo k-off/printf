@@ -157,7 +157,7 @@ int main() {
 	// printBin(-NAN);
 	// printBin(0.0);
 	// printBin(-0.0);
-	float f = NAN;
+	long double f = NAN;
 	char *s = dbltostr_base(INFINITY, 10, true, 5);
 	printf("%s\n", s);
 	free(s);
@@ -172,11 +172,27 @@ int main() {
 	free(s);
 	f = 150321.64656;
 	s = dbltostr_base(f, 10, true, 5);
-	printf("%Lf: %s\n", (long double)-f, s);
+	printf("%15.5Lf: %s\n", f, s);
 	free(s);
 	f = -150321.64656;
 	s = dbltostr_base(f, 16, true, 5);
-	printf("%Lf: %s\n", (long double)-f, s);
+	printf("%15.5Lf: %s\n", f, s);
+	free(s);
+	f = -0.00000356L;
+	s = dbltostr_base(f, 10, true, 6);
+	printf("%15.6Lf: %s\n", f, s);
+	free(s);
+	s = dbltostr_base(f, 10, true, 7);
+	printf("%15.7Lf: %s\n", f, s);
+	free(s);
+	s = dbltostr_base(f, 10, true, 8);
+	printf("%15.8Lf: %s\n", f, s);
+	free(s);
+	s = dbltostr_base(f, 10, true, 9);
+	printf("%15.9Lf: %s\n", f, s);
+	free(s);
+	s = dbltostr_base(f, 10, true, 10);
+	printf("%15.10Lf: %s\n", f, s);
 	free(s);
 	// test_round();
 
