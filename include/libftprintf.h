@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 21:04:21 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/18 13:36:08 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/19 21:58:27 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <stdlib.h>
 # include <limits.h>
 
+/**
+ * @brief {FAIL == -1, SUCCESS == 0}
+ */
 typedef enum e_return {
 	FAIL=-1,
 	SUCCESS
@@ -33,8 +36,8 @@ typedef enum e_bool {
 typedef enum e_len_mod {
 	NO_MOD,
 	L,
-	ll,
 	l,
+	ll,
 	h,
 	hh
 }	t_len_mod;
@@ -49,21 +52,7 @@ typedef enum e_flags {
 	SEP = '\''
 }	t_flags;
 
-typedef enum e_conv {
-	NO_CONV,
-	c = 'c',
-	s = 's',
-	p = 'p',
-	d = 'd',
-	i = 'i',
-	o = 'o',
-	u = 'u',
-	x = 'x',
-	X = 'X',
-	f = 'f',
-	F = 'F',
-	prc = '%'
-}	t_conv;
+# define CONVERSIONS "cspdiouxXfFaAeEgG%"
 
 typedef union u_val {
 	long double		f128;
@@ -73,19 +62,26 @@ typedef union u_val {
 	uint32_t		u32;
 }					t_val;
 
+/**
+ * @brief Resulting string
+ * 
+ * @param s char*, c-string
+ * @param len size_t, length of string
+ */
 typedef struct s_res {
 	char			*s;
 	size_t			len;
 }					t_res;
 
 typedef struct s_node {
-	int32_t			width;
-	int32_t			prcsn;
-	t_flags			flags;
-	t_len_mod		ln_md;
-	t_val			v;
-	t_conv			conv;
 	t_res			res;
+	t_val			v;
+	uint32_t		width;
+	uint32_t		prcsn;
+	char			flags[4];
+	t_len_mod		ln_md;
+	uint8_t			conv;
+	t_bool			is_prcsn_def;
 	struct s_node	*next;
 }					t_node;
 
@@ -97,7 +93,7 @@ typedef struct s_node {
  * @return int negative on error, or the number of characters written
  * 			(excluding the null byte used to end output to strings)
  */
-int		ft_printf(const char *format, ...);
+int			ft_printf(const char *format, ...);
 
 /**
  * @brief Write output to the specified file_descriptor
@@ -108,7 +104,7 @@ int		ft_printf(const char *format, ...);
  * @return int negative on error, or the number of characters written
  * 			(excluding the null byte used to end output to strings)
  */
-int		ft_dprintf(int file_descriptor, const char *format, ...);
+int			ft_dprintf(int file_descriptor, const char *format, ...);
 
 /**
  * @brief Allocate enough memory for return and write into allocated string
@@ -119,7 +115,7 @@ int		ft_dprintf(int file_descriptor, const char *format, ...);
  * @return int negative on error, or the number of characters written 
  * 			(excluding the null byte used to end output to strings)
  */
-int		ft_sprintf(char **return_string, const char *format, ...);
+int			ft_sprintf(char **return_string, const char *format, ...);
 
 /**
  * @brief Write output to the specified file_descriptor
@@ -130,7 +126,7 @@ int		ft_sprintf(char **return_string, const char *format, ...);
  * @return int negative on error, or the number of characters written 
  * 			(excluding the null byte used to end output to strings)
  */
-int		ft_vdprintf(int file_descriptor, const char *format, va_list ap);
+int			ft_vdprintf(int file_descriptor, const char *format, va_list ap);
 
 /**
  * @brief Allocate enough memory for return and write into allocated string
@@ -141,7 +137,7 @@ int		ft_vdprintf(int file_descriptor, const char *format, va_list ap);
  * @return int negative on error, or the number of characters written 
  * 			(excluding the null byte used to end output to strings)
  */
-int		ft_vsprintf(char **return_string, const char *s, va_list ap);
+int			ft_vsprintf(char **return_string, const char *s, va_list ap);
 
 /* ****************************************************************************
  * HELPER FUNCTIONS
@@ -153,7 +149,7 @@ int		ft_vsprintf(char **return_string, const char *s, va_list ap);
  * @param size size of allocated memory area
  * @return void* pointer to the memory
  */
-void	*ft_memalloc(size_t size);
+void		*ft_memalloc(size_t size);
 
 /**
  * @brief Allocate a null-terminated string filled with character c
@@ -162,7 +158,36 @@ void	*ft_memalloc(size_t size);
  * @param size length of string without counting ending null-byte
  * @return char* allocated string or NULL on error
 */
-char	*ft_stralloc(char c, size_t size);
+char		*ft_stralloc(char c, size_t size);
+
+/**
+ * @brief Join plain and converted chunks into a single allocated return_string
+ * 
+ * @param return_string char**, address of the resulting string
+ * @param total_bytes int, size in bytes of memory to be allocated for the result
+ * @param chunks_list t_node*, list of plain and converted chunks
+ * @return t_return SUCCESS or FAIL
+ */
+t_return join_results(char **return_string, int total_bytes, t_node *chunks_list);
+
+/**
+ * @brief Release conversion list and each node's content
+ * 
+ * @param chunks_list t_node*, list of plain and converted chunks
+ * @return t_return SUCCESS or FAIL
+ */
+t_return release_conversions(t_node *chunks_list);
+
+/**
+ * @brief Convert data from the chunks list into string chunks and store total
+ * 		bytes amount
+ * 
+ * @param total_bytes int*, total bytes in the resulting string 
+ * @param chunks_list t_node*, list of plain and converted chunks
+ * @return t_return SUCCESS or FAIL
+ */
+t_return handle_conversions(int *total_bytes, t_node *chunks_list);
+
 /**
  * @brief Allocates (with malloc(3)) and returns a string representing the 
   		integer received as an argument with required base.
@@ -174,7 +199,8 @@ char	*ft_stralloc(char c, size_t size);
  * @return char*, string on success or NULL on error. Example:
     decimal 31 == binary 11111 == octal 38 == hex 1f
  */
-char	*lltoa_base(int64_t n, int base, t_bool upper_case, int8_t grp_thsnd);
+char		*lltoa_base(int64_t n, int base, t_bool upper_case, \
+						int8_t grp_thsnd);
 
 /**
  * @brief Allocates (with malloc(3)) and returns a string representing the 
@@ -187,7 +213,8 @@ char	*lltoa_base(int64_t n, int base, t_bool upper_case, int8_t grp_thsnd);
  * @return char*, string on success or NULL on error. Example:
     decimal 31 == binary 11111 == octal 38 == hex 1f
  */
-char	*ulltoa_base(uint64_t n, int base, t_bool upper_case, int8_t grp_thsnd);
+char		*ulltoa_base(uint64_t n, int base, t_bool upper_case, \
+						int8_t grp_thsnd);
 
 /**
  * @brief Allocates (with malloc(3)) and returns a string representing the 
@@ -199,7 +226,8 @@ char	*ulltoa_base(uint64_t n, int base, t_bool upper_case, int8_t grp_thsnd);
  * @return char*, string on success or NULL on error. Example:
     decimal 31 == binary 11111 == octal 38 == hex 1f
 */
-char	*dbltostr_base(long double n, int base, t_bool upper, uint64_t prec);
+char		*dbltostr_base(long double n, int base, t_bool upper, \
+						uint64_t prec);
 
 /**
  * @brief Join n heap-allocated strings and free them, NULL is ignored
@@ -208,5 +236,27 @@ char	*dbltostr_base(long double n, int base, t_bool upper, uint64_t prec);
  * @param ... char* string pointers
  * @return char* string on success, NULL on error
  */
-char	*string_joiner(size_t n, ...);
+char		*string_joiner(size_t n, ...);
+
+/**
+ * @brief Gather all conversion-related info (flags, width, precision, 
+ * 		length modifiers) into t_node and move address of fmt-string
+ * 		to the byte after conversion character
+ * 
+ * @param tmp t_node*, structure to store all conversion-related data
+ * @param fmt char**, address of format-string
+ * @return t_return SUCCESS or FAIL
+ */
+t_return	parse_conversion(t_node *tmp, const char **fmt);
+
+/**
+ * @brief Parse format-string and store all conversion-related data in a list
+ * 
+ * @param head t_node**, address of pointer to store list of all conversions
+ * @param fmt char*, format-string
+ * @param ap va_list, list of arguments whose number and types are not known
+ * @return t_return SUCCESS or FAIL
+ */
+t_return	parse_format(t_node **head, const char *fmt, va_list ap);
+
 #endif

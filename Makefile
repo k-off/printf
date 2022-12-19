@@ -10,7 +10,9 @@ HDR=-Iinclude -Ilibft/include
 OBJDIR=obj
 SRCDIR=src
 
-SRC= ft_memalloc.c ft_ntoa_base.c ft_printf.c string_joiner.c ft_dbltostr_base.c
+SRC= manage_memory.c ft_ntoa_base.c ft_printf.c string_joiner.c \
+	ft_dbltostr_base.c parse_format.c parse_format_utils.c \
+	handle_conversions.c
 
 BSRC = 
 
@@ -49,7 +51,7 @@ so:
 
 re: fclean all
 
-test: re
+test: all
 	@$(CC) -I$(HDR) -c tests/main.c -o obj/main.o
 	@$(CC) -o test obj/main.o libftprintf.a libft/libft.a
 

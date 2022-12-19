@@ -1,5 +1,6 @@
 #include "../include/libftprintf.h"
 #include <stdio.h>
+#include <unistd.h>
 #include <limits.h>
 #include <float.h>
 #include <math.h>
@@ -141,12 +142,11 @@ int test_round() {
 	return (0);
 }
 
-int main() {
-	// test_string_joiner();
-	// test_ulltoa_base();
-	// test_lltoa_base();
-	// test_stralloc();
-
+void floatPlayground()
+{
+		// int n = printf("%s%c%s", "hello ", 0, "world");
+	// unsigned long long int d = 149;
+	// printf("\n%-+10.4lld|\n", d);
 	//printf("LDBL_MIN         = %.16950Lf\n", LDBL_MIN);
 	// long double n = INFINITY;
 	// printf("%Lf|\n", n);
@@ -157,43 +157,43 @@ int main() {
 	// printBin(-NAN);
 	// printBin(0.0);
 	// printBin(-0.0);
-	long double f = NAN;
-	char *s = dbltostr_base(INFINITY, 10, true, 5);
-	printf("%s\n", s);
-	free(s);
-	s = dbltostr_base(-INFINITY, 10, false, 5);
-	printf("%s\n", s);
-	free(s);
-	s = dbltostr_base(NAN, 10, false, 5);
-	printf("%s\n", s);
-	free(s);
-	s = dbltostr_base(-f, 10, true, 5);
-	printf("%s\n", s);
-	free(s);
-	f = 150321.64656;
-	s = dbltostr_base(f, 10, true, 5);
-	printf("%15.5Lf: %s\n", f, s);
-	free(s);
-	f = -150321.64656;
-	s = dbltostr_base(f, 16, true, 5);
-	printf("%15.5Lf: %s\n", f, s);
-	free(s);
-	f = -0.00000356L;
-	s = dbltostr_base(f, 10, true, 6);
-	printf("%15.6Lf: %s\n", f, s);
-	free(s);
-	s = dbltostr_base(f, 10, true, 7);
-	printf("%15.7Lf: %s\n", f, s);
-	free(s);
-	s = dbltostr_base(f, 10, true, 8);
-	printf("%15.8Lf: %s\n", f, s);
-	free(s);
-	s = dbltostr_base(f, 10, true, 9);
-	printf("%15.9Lf: %s\n", f, s);
-	free(s);
-	s = dbltostr_base(f, 10, true, 10);
-	printf("%15.10Lf: %s\n", f, s);
-	free(s);
+	// long double f = NAN;
+	// char *s = dbltostr_base(INFINITY, 10, true, 5);
+	// printf("%s\n", s);
+	// free(s);
+	// s = dbltostr_base(-INFINITY, 10, false, 5);
+	// printf("%s\n", s);
+	// free(s);
+	// s = dbltostr_base(NAN, 10, false, 5);
+	// printf("%s\n", s);
+	// free(s);
+	// s = dbltostr_base(-f, 10, true, 5);
+	// printf("%s\n", s);
+	// free(s);
+	// f = 150321.64656;
+	// s = dbltostr_base(f, 10, true, 5);
+	// printf("%15.5Lf: %s\n", f, s);
+	// free(s);
+	// f = -150321.64656;
+	// s = dbltostr_base(f, 16, true, 5);
+	// printf("%15.5Lf: %s\n", f, s);
+	// free(s);
+	// f = -0.00000356L;
+	// s = dbltostr_base(f, 10, true, 6);
+	// printf("%15.6Lf: %s\n", f, s);
+	// free(s);
+	// s = dbltostr_base(f, 10, true, 7);
+	// printf("%15.7Lf: %s\n", f, s);
+	// free(s);
+	// s = dbltostr_base(f, 10, true, 8);
+	// printf("%15.8Lf: %s\n", f, s);
+	// free(s);
+	// s = dbltostr_base(f, 10, true, 9);
+	// printf("%15.9Lf: %s\n", f, s);
+	// free(s);
+	// s = dbltostr_base(f, 10, true, 10);
+	// printf("%15.10Lf: %s\n", f, s);
+	// free(s);
 	// test_round();
 
 		// if (((((char *)(&n))[i] >> 7) & 1) == 1) //((((char *)(&n))[i] >> 7) & 1) == 1
@@ -213,5 +213,92 @@ int main() {
 	// 	n/=10;
 	// printf("%lu\n", (uint64_t)(n));
 	// printf("%lu\n", UINT64_MAX);
+}
+
+void va_playground(int n, ...)
+{
+	va_list ap;
+	va_start(ap, n);
+	123.456L   != va_arg(ap, long double) ? printf(" KO") : printf(" OK");
+	123.456    != va_arg(ap,      double) ? printf(" KO") : printf(" OK");
+	123.456F   != va_arg(ap,      double) ? printf(" KO") : printf(" OK");
+	NULL       != va_arg(ap,       void*) ? printf(" KO") : printf(" OK");
+	UINT64_MAX != va_arg(ap,    uint64_t) ? printf(" KO") : printf(" OK");
+	INT64_MAX  != va_arg(ap,    uint64_t) ? printf(" KO") : printf(" OK");
+	UINT32_MAX != va_arg(ap,    uint32_t) ? printf(" KO") : printf(" OK");
+	INT32_MAX  != va_arg(ap,    uint32_t) ? printf(" KO") : printf(" OK");
+	UINT16_MAX != va_arg(ap,    uint32_t) ? printf(" KO") : printf(" OK");
+	INT16_MAX  != va_arg(ap,    uint32_t) ? printf(" KO") : printf(" OK");
+	UINT8_MAX  != va_arg(ap,    uint32_t) ? printf(" KO") : printf(" OK");
+	INT8_MAX   != va_arg(ap,    uint32_t) ? printf(" KO") : printf(" OK");
+	INT8_MIN   != (char)va_arg(ap,    uint32_t) ? printf(" KO") : printf(" OK");
+	va_end(ap);
+}
+
+int test_join_results(t_node *chunks_list) {
+	int total_bytes = 0;
+	char *return_string;
+	if (chunks_list == NULL)
+		return (SUCCESS);
+	if (handle_conversions(&total_bytes, chunks_list) == FAIL)
+		printf("handle_conversions() failed\n");
+	else if (join_results(&return_string, total_bytes, chunks_list) == FAIL)
+		printf("join_results() failed\n");
+	else if (release_conversions(chunks_list) == FAIL)
+		printf("release_conversions() failed\n");
+	else if (return_string == NULL)
+		printf("something is completely off, string is not allocated");
+	else
+	{
+		printf("bytes: (%d vs %ld), str: '%s'\n", total_bytes, ft_strlen(return_string), return_string);
+		free(return_string);
+	}
+	return (SUCCESS);
+}
+
+int test_format_parser(char *fmt, ...) {
+	t_node *head = NULL;
+	t_node *tmp = NULL;
+	va_list ap;
+	va_start(ap, fmt);
+	if (parse_format(&head, fmt, ap) == SUCCESS) {
+		tmp = head;
+	}
+	va_end(ap);
+	while (head)
+	{
+		if (head->conv == 0)
+			printf("'%s'\n", head->res.s);
+		else {
+			head->res.s = ft_strdup(" test ");
+			head->res.len = ft_strlen(head->res.s);
+			printf("%u %u %d : ", head->width, head->prcsn,head->ln_md);
+		}
+		if (ft_strchr("diouxX", head->conv) != NULL && head->conv != 0)
+			printf("%hd\n", head->v.u32);
+		else if (ft_strchr("s", head->conv) != NULL && head->conv != 0)
+			printf("'%s'\n", (char *)head->v.ptr);
+		else if (ft_strchr("FaAeEgG", head->conv) != NULL && head->conv != 0)
+			printf("'%Lf'\n", head->v.f128);
+		head = head->next;
+	}
+	test_join_results(tmp);
+	return 0;
+}
+
+int main() {
+	// test_string_joiner();
+	// test_ulltoa_base();
+	// test_lltoa_base();
+	// test_stralloc();
+
+	// va_playground(12, 123.456L, 123.456, 123.456F, NULL, UINT64_MAX, INT64_MAX, \
+	// 	UINT32_MAX, INT32_MAX, UINT16_MAX, INT16_MAX, UINT8_MAX, INT8_MAX, INT8_MIN);
+
+	test_format_parser(NULL);
+	test_format_parser("");
+	test_format_parser("blah");
+	test_format_parser("Print %-+30.30hhd words \'%-+30.30lls\' and floats %+-30.30LF", INT16_MAX, "hello", 0.019364L);
+	test_format_parser("Print %-+30.30hhd words \'%-+30.30lls\' and floats %+-30.30LF", INT16_MAX, "hello");
 	return (0);
 }

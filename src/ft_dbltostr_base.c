@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 14:09:41 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/18 12:25:23 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/19 22:01:46 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*infnan(long double n, t_bool upper)
 }
 
 /**
- * @brief Convert decimal part of a float into a string with requitred base
+ * @brief Convert decimal part of a float into a string with required base
  * 		and case
  * 
  * @param n long double, number to be converted
@@ -75,7 +75,7 @@ static char	*dbl_intpart(long double n, int base, t_bool upper)
 }
 
 /**
- * @brief Convert decimal part of a float into a string with requitred base,
+ * @brief Convert decimal part of a float into a string with required base,
  * 		case and precision
  * 
  * @param n long double, number to be converted

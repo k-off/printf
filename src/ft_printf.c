@@ -6,20 +6,28 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:44:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/18 13:51:56 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/19 22:00:59 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 #include <unistd.h>
 
-int	ft_vsprintf(char **str, const char *s, va_list ap)
+int	ft_vsprintf(char **return_string, const char *format, va_list ap)
 {
-	(void)str;
-	(void)s;
-	(void)ap;
+	t_node	*chunks_list;
+	int		total_bytes;
+	t_return	status;
 
-	return (0);
+	return_string[0] = NULL;
+	total_bytes = 0;
+	status = FAIL;
+	if (parse_format(&chunks_list, format, ap) == SUCCESS)
+		if (handle_conversions(&total_bytes, chunks_list) == SUCCESS)
+			status = join_results(return_string, total_bytes, chunks_list);
+	if (release_conversions(chunks_list) == FAIL || status == FAIL)
+		return ((int)FAIL);
+	return (total_bytes);
 }
 
 int	ft_sprintf(char **str, const char *s, ...)
@@ -40,9 +48,9 @@ int	ft_vdprintf(int fd, const char *s, va_list ap)
 
 	str = NULL;
 	res = ft_vsprintf(&str, s, ap);
-	if (res > 0 && str)
+	if (res > 0 && str != NULL)
 		write(fd, str, res);
-	if (str)
+	if (str != NULL)
 		free (str);
 	return (res);
 }
