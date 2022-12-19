@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 21:04:21 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/17 16:29:15 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/18 13:36:08 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # include <limits.h>
 
 typedef enum e_return {
-	FAIL=-1, SUCCESS
+	FAIL=-1,
+	SUCCESS
 }	t_return;
 
 typedef enum e_bool {
@@ -39,6 +40,7 @@ typedef enum e_len_mod {
 }	t_len_mod;
 
 typedef enum e_flags {
+	NO_FLAG,
 	HASH = '#',
 	ZERO = '0',
 	MINUS = '-',
@@ -64,17 +66,17 @@ typedef enum e_conv {
 }	t_conv;
 
 typedef union u_val {
-	long double	f128;
-	double		f64;
-	void		*ptr;
-	uint64_t	u64;
-	uint32_t	u32;
-}				t_val;
+	long double		f128;
+	double			f64;
+	void			*ptr;
+	uint64_t		u64;
+	uint32_t		u32;
+}					t_val;
 
 typedef struct s_res {
-	char	*s;
-	size_t	len;
-}			t_res;
+	char			*s;
+	size_t			len;
+}					t_res;
 
 typedef struct s_node {
 	int32_t			width;
@@ -87,7 +89,59 @@ typedef struct s_node {
 	struct s_node	*next;
 }					t_node;
 
-int		ft_printf(const char *s, ...);
+/**
+ * @brief Write output to stdout, the standard output stream
+ * 
+ * @param format char*, format string
+ * @param ... variable number of arguments
+ * @return int negative on error, or the number of characters written
+ * 			(excluding the null byte used to end output to strings)
+ */
+int		ft_printf(const char *format, ...);
+
+/**
+ * @brief Write output to the specified file_descriptor
+ * 
+ * @param file_descriptor int, file descriptor
+ * @param format char*, format string
+ * @param ... variable number of arguments
+ * @return int negative on error, or the number of characters written
+ * 			(excluding the null byte used to end output to strings)
+ */
+int		ft_dprintf(int file_descriptor, const char *format, ...);
+
+/**
+ * @brief Allocate enough memory for return and write into allocated string
+ * 
+ * @param return_string char**, address of the string pointer
+ * @param format char*, format string
+ * @param ... variable number of arguments
+ * @return int negative on error, or the number of characters written 
+ * 			(excluding the null byte used to end output to strings)
+ */
+int		ft_sprintf(char **return_string, const char *format, ...);
+
+/**
+ * @brief Write output to the specified file_descriptor
+ * 
+ * @param file_descriptor int, file descriptor
+ * @param format char*, format string
+ * @param ap va_args, list of arguments whose number and types are not known
+ * @return int negative on error, or the number of characters written 
+ * 			(excluding the null byte used to end output to strings)
+ */
+int		ft_vdprintf(int file_descriptor, const char *format, va_list ap);
+
+/**
+ * @brief Allocate enough memory for return and write into allocated string
+ * 
+ * @param return_string char**, address of the string pointer
+ * @param format char*, format string
+ * @param ap va_args, list of arguments whose number and types are not known
+ * @return int negative on error, or the number of characters written 
+ * 			(excluding the null byte used to end output to strings)
+ */
+int		ft_vsprintf(char **return_string, const char *s, va_list ap);
 
 /* ****************************************************************************
  * HELPER FUNCTIONS
