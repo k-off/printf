@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 21:10:05 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/17 10:28:18 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/18 11:28:46 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	*ft_stralloc(char c, size_t size)
 	char	*ret;
 	size_t	i;
 
+	ret = NULL;
 	ret = (char *)malloc(size + 1);
 	if (!ret)
 	{
