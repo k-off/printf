@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   format_parser_utils.c                              :+:      :+:    :+:   */
+/*   parse_format_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 21:01:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/19 22:01:28 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/23 13:32:02 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ static t_return	parse_precision(t_node *tmp, const char **fmt)
 {
 	int	precision;
 
-	if (fmt[0] == NULL || fmt[0][0] == '\0' || (fmt[0][0] == '.' && \
-			!ft_isdigit(fmt[0][1])))
+	if (fmt[0] == NULL || fmt[0][0] == '\0' || fmt[0][1] == '\0')
 		return (FAIL);
 	if (fmt[0][0] == '.')
 		++fmt[0];
@@ -107,6 +106,12 @@ t_return	parse_conversion(t_node *tmp, const char **fmt)
 		return (FAIL);
 	if (ft_strchr("cspdiouxXfFaAeEgG%", fmt[0][0]))
 	{
+		if (ft_strchr("diouxX", tmp->conv) && tmp->is_prcsn_def == false)
+			tmp->prcsn = 1;
+		else if (ft_strchr("fFeEgG", tmp->conv) && tmp->is_prcsn_def == false)
+			tmp->prcsn = 6;
+		else if (ft_strchr("aA", tmp->conv) && tmp->is_prcsn_def == false)
+			tmp->prcsn = 4;
 		tmp->conv = fmt[0][0];
 		++fmt[0];
 	}

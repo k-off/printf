@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 21:04:21 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/19 21:58:27 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/23 13:59:00 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,8 @@ char		*ft_stralloc(char c, size_t size);
  * @param chunks_list t_node*, list of plain and converted chunks
  * @return t_return SUCCESS or FAIL
  */
-t_return join_results(char **return_string, int total_bytes, t_node *chunks_list);
+t_return	join_results(char **return_string, int total_bytes, \
+						t_node *chunks_list);
 
 /**
  * @brief Release conversion list and each node's content
@@ -176,7 +177,25 @@ t_return join_results(char **return_string, int total_bytes, t_node *chunks_list
  * @param chunks_list t_node*, list of plain and converted chunks
  * @return t_return SUCCESS or FAIL
  */
-t_return release_conversions(t_node *chunks_list);
+t_return	release_conversions(t_node *chunks_list);
+
+/**
+ * @brief Convert data from the chunks list into string chunks and store total
+ * 		bytes amount for doble numbers under conversions e, E, f, F, g and G
+ * 
+ * @param tmp t_node*, current conversion node
+ * @return t_return SUCCESS or FAIL
+ */
+t_return	handle_doubles_other(t_node *tmp);
+
+/**
+ * @brief Convert data from the chunks list into string chunks and store total
+ * 		bytes amount for doble numbers under conversions a and A
+ * 
+ * @param tmp t_node*, current conversion node
+ * @return t_return SUCCESS or FAIL
+ */
+t_return	handle_doubles_aa(t_node *tmp);
 
 /**
  * @brief Convert data from the chunks list into string chunks and store total
@@ -186,7 +205,7 @@ t_return release_conversions(t_node *chunks_list);
  * @param chunks_list t_node*, list of plain and converted chunks
  * @return t_return SUCCESS or FAIL
  */
-t_return handle_conversions(int *total_bytes, t_node *chunks_list);
+t_return	handle_conversions(int *total_bytes, t_node *chunks_list);
 
 /**
  * @brief Allocates (with malloc(3)) and returns a string representing the 
