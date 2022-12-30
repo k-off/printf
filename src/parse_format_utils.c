@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 21:01:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/23 13:32:02 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/30 13:52:09 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ static t_return	parse_modifier(t_node *tmp, const char **fmt)
 		tmp->ln_md = l;
 	if (fmt[0][0] == 'h')
 		tmp->ln_md = h;
-	++fmt[0];
+	if (ft_strchr("lhL", fmt[0][0]) != NULL)
+		++fmt[0];
 	if (fmt[0][0] == 'l' && tmp->ln_md == l)
 		tmp->ln_md = ll;
 	else if (fmt[0][0] == 'l' && tmp->ln_md != l)
