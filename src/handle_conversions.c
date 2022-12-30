@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:44:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/23 14:00:34 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/30 14:18:38 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,22 @@ static t_return	handle_strings(t_node *tmp)
 
 static t_return	handle_chars(t_node *tmp)
 {
-	(void)tmp;
+	char	str[2];
+	char	*width;
+
+	str[0] = (int8_t)tmp->v.u32;
+	str[1] = '\0';
+	width = NULL;
+	tmp->res.len = 1;
+	if (tmp->width > 1)
+	{
+		width = ft_stralloc(' ', tmp->width - 1);
+		tmp->res.len = tmp->width;
+	}
+	if (tmp->flags[1] == '-')
+		tmp->res.s = string_joiner(2, ft_strdup(str), width);
+	else
+		tmp->res.s = string_joiner(2, width, ft_strdup(str));
 	return (SUCCESS);
 }
 
