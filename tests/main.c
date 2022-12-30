@@ -286,6 +286,27 @@ int test_format_parser(char *fmt, ...) {
 	return 0;
 }
 
+int test_char()
+{
+	printf("|%c| ", 'a');		write(1, "", 1);	ft_printf("|%c| ", 'Z');
+	printf("|%5c| ", 'a');		write(1, "", 1);	ft_printf("|%5c| ", 'Z');
+	printf("|%-5c| ", 'a');		write(1, "", 1);	ft_printf("|%-5c| ", 'Z');
+	printf("|%05c| ", 'a');		write(1, "", 1);	ft_printf("|%05c| ", 'Z');
+	printf("|%-05c| ", 'a');	write(1, "", 1);	ft_printf("|%-05c| ", 'Z');
+	printf("|%5.3c| ", 'a');	write(1, "", 1);	ft_printf("|%5.3c| ", 'Z');
+	printf("|%-05.3c| ", 'a');	write(1, "", 1);	ft_printf("|%-05.3c|\n", 'Z');
+	ft_printf("============================================================\n");
+	printf("|%+c| ", 'a');		write(1, "", 1);	ft_printf("|%+c| ", 'Z');
+	printf("|%+5c| ", 'a');		write(1, "", 1);	ft_printf("|%+5c| ", 'Z');
+	printf("|%+-5c| ", 'a');		write(1, "", 1);	ft_printf("|%+-5c| ", 'Z');
+	printf("|%+05c| ", 'a');		write(1, "", 1);	ft_printf("|%+05c| ", 'Z');
+	printf("|%+-05c| ", 'a');	write(1, "", 1);	ft_printf("|%+-05c| ", 'Z');
+	printf("|%+5.3c| ", 'a');	write(1, "", 1);	ft_printf("|%+5.3c| ", 'Z');
+	printf("|%+-05.3c| ", 'a');	write(1, "", 1);	ft_printf("|%+-05.3c|\n", 'Z');
+	ft_printf("============================================================\n");
+	return SUCCESS;
+}
+
 int main() {
 	// test_string_joiner();
 	// test_ulltoa_base();
@@ -295,10 +316,11 @@ int main() {
 	// va_playground(12, 123.456L, 123.456, 123.456F, NULL, UINT64_MAX, INT64_MAX, \
 	// 	UINT32_MAX, INT32_MAX, UINT16_MAX, INT16_MAX, UINT8_MAX, INT8_MAX, INT8_MIN);
 
-	test_format_parser(NULL);
-	test_format_parser("");
-	test_format_parser("blah");
-	test_format_parser("Print %-+30.30hhd words \'%-+30.30lls\' and floats %+-30.30LF", INT16_MAX, "hello", 0.019364L);
-	test_format_parser("Print %-+30.30hhd words \'%-+30.30lls\' and floats %+-30.30LF", INT16_MAX, "hello");
+	// test_format_parser(NULL);
+	// test_format_parser("");
+	// test_format_parser("blah");
+	// test_format_parser("Print %-+30.30hhd words \'%-+30.30lls\' and floats %+-30.30LF", INT16_MAX, "hello", 0.019364L);
+	// test_format_parser("Print %-+30.30hhd words \'%-+30.30lls\' and floats %+-30.30LF", INT16_MAX, "hello");
+	test_char();
 	return (0);
 }
