@@ -6,19 +6,15 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:44:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/30 14:18:38 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/31 08:32:22 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static t_return	handle_integers(t_node *tmp)
-{
-	(void)tmp;
-	return (SUCCESS);
-}
+t_return	handle_string_conversion(t_node *tmp);
 
-static t_return	handle_strings(t_node *tmp)
+static t_return	handle_integers(t_node *tmp)
 {
 	(void)tmp;
 	return (SUCCESS);
@@ -29,6 +25,8 @@ static t_return	handle_chars(t_node *tmp)
 	char	str[2];
 	char	*width;
 
+	if (tmp == NULL)
+		return (FAIL);
 	str[0] = (int8_t)tmp->v.u32;
 	str[1] = '\0';
 	width = NULL;
@@ -62,7 +60,7 @@ t_return	handle_conversions(int *total_bytes, t_node *chunks_list)
 		else if (ft_strchr("diouxX", chunks_list->conv))
 			handle_integers(chunks_list);
 		else if (chunks_list->conv == 's')
-			handle_strings(chunks_list);
+			handle_string_conversion(chunks_list);
 		else if (chunks_list->conv == 'c')
 			handle_chars(chunks_list);
 		else if (chunks_list->conv == 'p')
