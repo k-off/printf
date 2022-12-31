@@ -55,4 +55,7 @@ test: all
 	@$(CC) -I$(HDR) -c tests/main.c -o obj/main.o
 	@$(CC) -o test obj/main.o libftprintf.a libft/libft.a
 
+memcheck: test
+	valgrind --leak-check=full --leak-resolution=high --show-leak-kinds=all ./test
+
 .PHONY: all clean fclean re bonus
