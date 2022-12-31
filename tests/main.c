@@ -286,25 +286,43 @@ int test_format_parser(char *fmt, ...) {
 	return 0;
 }
 
-int test_char()
+// int test_char()
+// {
+// 	printf("|%c| ", 'a');		write(1, "", 1);	ft_printf("|%c| ", 'Z');
+// 	printf("|%5c| ", 'a');		write(1, "", 1);	ft_printf("|%5c| ", 'Z');
+// 	printf("|%-5c| ", 'a');		write(1, "", 1);	ft_printf("|%-5c| ", 'Z');
+// 	printf("|%05c| ", 'a');		write(1, "", 1);	ft_printf("|%05c| ", 'Z');
+// 	printf("|%-05c| ", 'a');	write(1, "", 1);	ft_printf("|%-05c| ", 'Z');
+// 	printf("|%5.3c| ", 'a');	write(1, "", 1);	ft_printf("|%5.3c| ", 'Z');
+// 	printf("|%-05.3c| ", 'a');	write(1, "", 1);	ft_printf("|%-05.3c|\n", 'Z');
+// 	printf("|%+c| ", 'a');		write(1, "", 1);	ft_printf("|%+c| ", 'Z');
+// 	printf("|%+5c| ", 'a');		write(1, "", 1);	ft_printf("|%+5c| ", 'Z');
+// 	printf("|%+-5c| ", 'a');		write(1, "", 1);	ft_printf("|%+-5c| ", 'Z');
+// 	printf("|%+05c| ", 'a');		write(1, "", 1);	ft_printf("|%+05c| ", 'Z');
+// 	printf("|%+-05c| ", 'a');	write(1, "", 1);	ft_printf("|%+-05c| ", 'Z');
+// 	printf("|%+5.3c| ", 'a');	write(1, "", 1);	ft_printf("|%+5.3c| ", 'Z');
+// 	printf("|%+-05.3c| ", 'a');	write(1, "", 1);	ft_printf("|%+-05.3c|\n", 'Z');
+// 	return SUCCESS;
+// }
+
+int test_string()
 {
-	printf("|%c| ", 'a');		write(1, "", 1);	ft_printf("|%c| ", 'Z');
-	printf("|%5c| ", 'a');		write(1, "", 1);	ft_printf("|%5c| ", 'Z');
-	printf("|%-5c| ", 'a');		write(1, "", 1);	ft_printf("|%-5c| ", 'Z');
-	printf("|%05c| ", 'a');		write(1, "", 1);	ft_printf("|%05c| ", 'Z');
-	printf("|%-05c| ", 'a');	write(1, "", 1);	ft_printf("|%-05c| ", 'Z');
-	printf("|%5.3c| ", 'a');	write(1, "", 1);	ft_printf("|%5.3c| ", 'Z');
-	printf("|%-05.3c| ", 'a');	write(1, "", 1);	ft_printf("|%-05.3c|\n", 'Z');
-	ft_printf("============================================================\n");
-	printf("|%+c| ", 'a');		write(1, "", 1);	ft_printf("|%+c| ", 'Z');
-	printf("|%+5c| ", 'a');		write(1, "", 1);	ft_printf("|%+5c| ", 'Z');
-	printf("|%+-5c| ", 'a');		write(1, "", 1);	ft_printf("|%+-5c| ", 'Z');
-	printf("|%+05c| ", 'a');		write(1, "", 1);	ft_printf("|%+05c| ", 'Z');
-	printf("|%+-05c| ", 'a');	write(1, "", 1);	ft_printf("|%+-05c| ", 'Z');
-	printf("|%+5.3c| ", 'a');	write(1, "", 1);	ft_printf("|%+5.3c| ", 'Z');
-	printf("|%+-05.3c| ", 'a');	write(1, "", 1);	ft_printf("|%+-05.3c|\n", 'Z');
-	ft_printf("============================================================\n");
-	return SUCCESS;
+	char	*s;
+	char	*values[] = {NULL, "", "hello"};
+
+	for (int i = 0; i < 3; ++i)
+	{
+		s = values[i];
+		printf("\n===================== |%s| =====================\n", s);
+		printf(" = %d bytes :: ", printf("|%s|", s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|%s|", s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|% s|", s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|% s|", s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%.s|", s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|%.s|", s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|% .s|", s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|% .s|", s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%10.3s|", s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|%10.3s|", s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%-10.3s|", s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|%-10.3s|", s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%10s|", s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|%10s|", s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%-10s|", s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|%-10s|", s)); fflush(stdout);
+	}
 }
 
 int main() {
@@ -321,6 +339,10 @@ int main() {
 	// test_format_parser("blah");
 	// test_format_parser("Print %-+30.30hhd words \'%-+30.30lls\' and floats %+-30.30LF", INT16_MAX, "hello", 0.019364L);
 	// test_format_parser("Print %-+30.30hhd words \'%-+30.30lls\' and floats %+-30.30LF", INT16_MAX, "hello");
-	test_char();
+
+	// test_char();
+
+	test_string();
 	return (0);
 }
+
