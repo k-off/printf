@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 21:04:21 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/23 13:59:00 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/31 09:06:58 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,24 +178,6 @@ t_return	join_results(char **return_string, int total_bytes, \
  * @return t_return SUCCESS or FAIL
  */
 t_return	release_conversions(t_node *chunks_list);
-
-/**
- * @brief Convert data from the chunks list into string chunks and store total
- * 		bytes amount for doble numbers under conversions e, E, f, F, g and G
- * 
- * @param tmp t_node*, current conversion node
- * @return t_return SUCCESS or FAIL
- */
-t_return	handle_doubles_other(t_node *tmp);
-
-/**
- * @brief Convert data from the chunks list into string chunks and store total
- * 		bytes amount for doble numbers under conversions a and A
- * 
- * @param tmp t_node*, current conversion node
- * @return t_return SUCCESS or FAIL
- */
-t_return	handle_doubles_aa(t_node *tmp);
 
 /**
  * @brief Convert data from the chunks list into string chunks and store total

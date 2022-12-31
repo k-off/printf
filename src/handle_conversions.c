@@ -6,13 +6,15 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:44:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/31 08:32:22 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/31 09:07:39 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
 t_return	handle_string_conversion(t_node *tmp);
+t_return	handle_doubles_other(t_node *tmp);
+t_return	handle_doubles_aa(t_node *tmp);
 
 static t_return	handle_integers(t_node *tmp)
 {
