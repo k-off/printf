@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memalloc.c                                      :+:      :+:    :+:   */
+/*   manage_memory.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 21:10:05 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/19 19:27:28 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/31 09:13:46 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ char	*ft_stralloc(char c, size_t size)
 	return ((void *)ret);
 }
 
-t_return join_results(char **return_string, int total_bytes, t_node *chunks_list)
+t_return	join_results(char **return_string, int total_bytes, \
+							t_node *chunks_list)
 {
 	size_t	ret_i;
 	size_t	cur_i;
@@ -77,9 +78,9 @@ t_return join_results(char **return_string, int total_bytes, t_node *chunks_list
 	return (SUCCESS);
 }
 
-t_return release_conversions(t_node *chunks_list)
+t_return	release_conversions(t_node *chunks_list)
 {
-	t_node *next;
+	t_node	*next;
 
 	if (chunks_list == NULL)
 		return (FAIL);

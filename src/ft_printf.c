@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:44:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/19 22:00:59 by pcovalio         ###   ########.fr       */
+/*   Updated: 2022/12/31 09:12:40 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 int	ft_vsprintf(char **return_string, const char *format, va_list ap)
 {
-	t_node	*chunks_list;
-	int		total_bytes;
+	t_node		*chunks_list;
+	int			total_bytes;
 	t_return	status;
 
 	return_string[0] = NULL;

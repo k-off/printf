@@ -25,7 +25,7 @@ static t_return	store_plain_part(t_node *tmp, const char **fmt)
 	return (SUCCESS);
 }
 
-static t_return get_float(t_node *tmp, va_list ap)
+static t_return	get_float(t_node *tmp, va_list ap)
 {
 	if (tmp->ln_md == L || tmp->ln_md == ll)
 		tmp->v.f128 = va_arg(ap, long double);
@@ -34,7 +34,7 @@ static t_return get_float(t_node *tmp, va_list ap)
 	return (SUCCESS);
 }
 
-static t_return get_int(t_node *tmp, va_list ap)
+static t_return	get_int(t_node *tmp, va_list ap)
 {
 	if (tmp->ln_md == l || tmp->ln_md == ll)
 		tmp->v.u64 = va_arg(ap, uint64_t);
@@ -48,7 +48,7 @@ static t_return	get_from_va_list(t_node *tmp, va_list ap)
 	if (tmp->conv != 0 && ft_strchr("fFaAeEgG", tmp->conv) != NULL)
 		get_float(tmp, ap);
 	else if (tmp->conv == 's' || tmp->conv == 'p')
-		tmp->v.ptr = va_arg(ap, void*);
+		tmp->v.ptr = va_arg(ap, void *);
 	else if (tmp->conv == '%')
 	{
 		if (tmp->flags != NO_FLAG || tmp->width != 0 || \
