@@ -6,13 +6,14 @@ AR=ar -rc
 
 BONUSFLAG=
 BSUF=
-HDR=-Iinclude -Ilibft/include
+HDR=-Iinclude -Ilibft/include -I.
 OBJDIR=obj
 SRCDIR=src
 
 SRC= manage_memory.c ft_ntoa_base.c ft_printf.c string_joiner.c \
 	ft_dbltostr_base.c parse_format.c parse_format_utils.c \
-	handle_conversions.c handle_double_conversion.c handle_string_conversion.c
+	handle_conversions.c handle_double_conversion.c handle_string_conversion.c \
+	handle_integer_conversion.c
 
 BSRC = 
 
@@ -27,18 +28,23 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 all: $(NAME)
 $(NAME):$(OBJ)
 	make all -C libft
-	$(AR) $(NAME) $^ libft/libft.a
+	$(AR) ftprintf.a $^
+	mv libft/libft.a libft.a
+	$(AR)T $(NAME) ftprintf.a libft.a
 
 bonus: BONUSFLAG=-DBONUS
 BSUF=_bonus
 
 bonus: $(OBJ) $(BOBJ)
 	make all -C libft
-	$(AR) $(NAME) $^
+	$(AR) ftprintf.a $^
+	mv libft/libft.a libft.a
+	$(AR)T $(NAME) ftprintf.a libft.a
 
 clean:
 	make clean -C libft
 	rm -rf $(OBJDIR)
+	rm -f  ftprintf.a libft.a
 
 fclean: clean
 	make fclean -C libft
@@ -51,9 +57,9 @@ so:
 
 re: fclean all
 
-test: all
+test: re
 	@$(CC) -I$(HDR) -c tests/main.c -o obj/main.o
-	@$(CC) -o test obj/main.o libftprintf.a libft/libft.a
+	@$(CC) -o test obj/main.o libftprintf.a
 
 memcheck: test
 	valgrind --leak-check=full --leak-resolution=high --show-leak-kinds=all ./test
