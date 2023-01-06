@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/04 15:12:06 by pcovalio          #+#    #+#             */
+/*   Updated: 2023/01/06 13:18:23 by pcovalio         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/libftprintf.h"
+#include "../ft_printf.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <limits.h>
@@ -323,6 +336,61 @@ int test_string()
 		printf(" = %d bytes :: ", printf("|%10s|", s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|%10s|", s)); fflush(stdout);
 		printf(" = %d bytes :: ", printf("|%-10s|", s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|%-10s|", s)); fflush(stdout);
 	}
+	return SUCCESS;
+}
+
+int test_integer()
+{
+	int	s;
+	int	values[] = {INT_MIN, -1, 0, 1, INT_MAX};
+
+	for (int i = 0; i < 5; ++i)
+	{
+		s = values[i];
+		printf("\n===================== |%d: no_flag| =====================\n", s);
+		printf(" = %d bytes :: ", printf("|%d|", s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|%d|", s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%hhd|", (char)s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|%hhd|", (char)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%hd|", (short)s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|%hd|", (short)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%ld|", (int64_t)s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|%ld|", (int64_t)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%lld|", (int64_t)s)); fflush(stdout); printf(" = %d bytes\n", ft_printf("|%lld|", (int64_t)s)); fflush(stdout);
+		exit(0);printf("\n===================== |%d: zero_flag| =====================\n", s);
+		printf(" = %d bytes :: ", printf("|%0d|", s)); fflush(stdout); printf(" = %d bytes\n", printf("|%0d|", s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%0hhd|", (char)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%0hhd|", (char)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%0hd|", (short)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%0hd|", (short)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%0ld|", (int64_t)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%0ld|", (int64_t)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%0lld|", (int64_t)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%0lld|", (int64_t)s)); fflush(stdout);
+		printf("\n===================== |%d: space_flag| =====================\n", s);
+		printf(" = %d bytes :: ", printf("|% d|", s)); fflush(stdout); printf(" = %d bytes\n", printf("|% d|", s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|% hhd|", (char)s)); fflush(stdout); printf(" = %d bytes\n", printf("|% hhd|", (char)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|% hd|", (short)s)); fflush(stdout); printf(" = %d bytes\n", printf("|% hd|", (short)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|% ld|", (int64_t)s)); fflush(stdout); printf(" = %d bytes\n", printf("|% ld|", (int64_t)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|% lld|", (int64_t)s)); fflush(stdout); printf(" = %d bytes\n", printf("|% lld|", (int64_t)s)); fflush(stdout);
+		printf("\n===================== |%d: hash_flag| =====================\n", s);
+		printf(" = %d bytes :: ", printf("|%#d|", s)); fflush(stdout); printf(" = %d bytes\n", printf("|%#d|", s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%#hhd|", (char)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%#hhd|", (char)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%#hd|", (short)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%#hd|", (short)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%#ld|", (int64_t)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%#ld|", (int64_t)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%#lld|", (int64_t)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%#lld|", (int64_t)s)); fflush(stdout);
+		printf("\n===================== |%d: plus_flag| =====================\n", s);
+		printf(" = %d bytes :: ", printf("|%+d|", s)); fflush(stdout); printf(" = %d bytes\n", printf("|%+d|", s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%+hhd|", (char)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%+hhd|", (char)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%+hd|", (short)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%+hd|", (short)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%+ld|", (int64_t)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%+ld|", (int64_t)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%+lld|", (int64_t)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%+lld|", (int64_t)s)); fflush(stdout);
+		printf("\n===================== |%d: separator_flag| =====================\n", s);
+		printf(" = %d bytes :: ", printf("|%'d|", s)); fflush(stdout); printf(" = %d bytes\n", printf("|%'d|", s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%'hhd|", (char)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%'hhd|", (char)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%'hd|", (short)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%'hd|", (short)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%'ld|", (int64_t)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%'ld|", (int64_t)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%'lld|", (int64_t)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%'lld|", (int64_t)s)); fflush(stdout);
+		printf("\n===================== |%d: width_precision| =====================\n", s);
+		printf(" = %d bytes :: ", printf("|%0d|", s)); fflush(stdout); printf(" = %d bytes\n", printf("|%0d|", s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%1d|", (char)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%1d|", (char)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%2.0d|", (short)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%2.0d|", (short)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|%2.1d|", (int64_t)s)); fflush(stdout); printf(" = %d bytes\n", printf("|%2.1d|", (int64_t)s)); fflush(stdout);
+		printf(" = %d bytes :: ", printf("|% -13.11d|", (int64_t)s)); fflush(stdout); printf(" = %d bytes\n", printf("|% -13.11d|", (int64_t)s)); fflush(stdout);
+	}
+	return SUCCESS;
 }
 
 int main() {
@@ -342,7 +410,27 @@ int main() {
 
 	// test_char();
 
-	test_string();
+	// test_string();
+	//test_integer();
+	// printf(" %p \n", 1);
+	// printf(" %p \n", 15);
+	// printf(" %p \n", 16);
+	// printf(" %p \n", 17);
+	// printf(" %p %p \n", LONG_MIN, LONG_MAX);
+	// printf(" %p %p \n", INT_MIN, INT_MAX);
+	// printf(" %p %p \n", ULONG_MAX, -ULONG_MAX);
+	// printf(" %p %p \n", 0, 0);
+	// printf("=======================");
+	// ft_printf(" %p \n", 1);
+	// ft_printf(" %p \n", 15);
+	// ft_printf(" %p \n", 16);
+	// ft_printf(" %p \n", 17);
+	// ft_printf(" %p %p \n", LONG_MIN, LONG_MAX);
+	// ft_printf(" %p %p \n", INT_MIN, INT_MAX);
+	// ft_printf(" %p %p \n", ULONG_MAX, -ULONG_MAX);
+	// ft_printf(" %p %p \n", 0, 0);
+	// ft_printf(" = %d\n",ft_printf("%%"));
+	ft_printf("%%");
 	return (0);
 }
 
