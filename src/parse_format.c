@@ -79,7 +79,7 @@ t_return	parse_format(t_node **head, const char *fmt, va_list ap)
 			res = parse_conversion(tmp, &fmt);
 		else
 			res = store_plain_part(tmp, &fmt);
-		if (res != FAIL)
+		if (res != FAIL && tmp->conv != '%')
 			res = get_from_va_list(tmp, ap);
 		if (res == FAIL)
 			return (FAIL);

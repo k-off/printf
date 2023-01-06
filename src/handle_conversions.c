@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:44:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/31 09:07:39 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/01/06 12:54:24 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,31 @@
 t_return	handle_string_conversion(t_node *tmp);
 t_return	handle_doubles_other(t_node *tmp);
 t_return	handle_doubles_aa(t_node *tmp);
+t_return	handle_integer_conversion(t_node *tmp);
 
-static t_return	handle_integers(t_node *tmp)
+static t_return	handle_pointer_conversion(t_node *tmp)
 {
-	(void)tmp;
+	if (tmp->v.u64 == 0)
+	{
+		tmp->res.s = ft_strdup("(nil)");
+		tmp->res.len = 5;
+	}
+	else
+	{
+		tmp->conv = 'x';
+		tmp->ln_md = ll;
+		tmp->flags[0] = HASH;
+		if (handle_integer_conversion(tmp) == FAIL)
+			return (FAIL);
+	}
 	return (SUCCESS);
 }
 
-static t_return	handle_chars(t_node *tmp)
+static t_return	handle_character_conversion(t_node *tmp)
 {
 	char	str[2];
 	char	*width;
 
-	if (tmp == NULL)
-		return (FAIL);
 	str[0] = (int8_t)tmp->v.u32;
 	str[1] = '\0';
 	width = NULL;
@@ -45,36 +56,40 @@ static t_return	handle_chars(t_node *tmp)
 	return (SUCCESS);
 }
 
-static t_return	handle_pointers(t_node *tmp)
+static t_return	handle_percent_conversion(t_node *tmp)
 {
-	(void)tmp;
+	tmp->res.s = ft_strdup("%");
+	tmp->res.len = 1;
+	if (tmp->res.s == NULL)
+		return (FAIL);
 	return (SUCCESS);
 }
 
 t_return	handle_conversions(int *total_bytes, t_node *chunks_list)
 {
-	if (total_bytes == NULL || chunks_list == NULL)
-		return (FAIL);
-	while (chunks_list)
+
+	while (total_bytes != NULL && chunks_list != NULL)
 	{
 		if (chunks_list->conv == 0 && chunks_list->res.s == NULL)
 			chunks_list->res.s = ft_memalloc(1);
 		else if (ft_strchr("diouxX", chunks_list->conv))
-			handle_integers(chunks_list);
+			handle_integer_conversion(chunks_list);
 		else if (chunks_list->conv == 's')
 			handle_string_conversion(chunks_list);
 		else if (chunks_list->conv == 'c')
-			handle_chars(chunks_list);
+			handle_character_conversion(chunks_list);
 		else if (chunks_list->conv == 'p')
-			handle_pointers(chunks_list);
+			handle_pointer_conversion(chunks_list);
 		else if (ft_strchr("aA", chunks_list->conv))
 			handle_doubles_aa(chunks_list);
 		else if (ft_strchr("eEfFgG", chunks_list->conv))
 			handle_doubles_other(chunks_list);
+		else if (chunks_list->conv == '%')
+			handle_percent_conversion(chunks_list);
 		else
 			return (FAIL);
 		*total_bytes += chunks_list->res.len;
 		chunks_list = chunks_list->next;
 	}
-	return (SUCCESS);
+	return ((total_bytes == NULL || chunks_list != NULL) * FAIL);
 }

@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 21:01:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/31 09:14:06 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/01/06 13:00:04 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ static t_return	parse_flags(t_node *tmp, const char **fmt)
 		if (fmt[0][0] == MINUS)
 			tmp->flags[1] = MINUS;
 		if (fmt[0][0] == SPACE && tmp->flags[2] != PLUS)
-			tmp->flags[1] = SPACE;
+			tmp->flags[2] = SPACE;
 		if (fmt[0][0] == PLUS)
 			tmp->flags[2] = PLUS;
 		if (fmt[0][0] == SEP)
-			tmp->flags[2] = SEP;
+			tmp->flags[3] = SEP;
 		++fmt[0];
 	}
 	return (SUCCESS);
@@ -54,7 +54,7 @@ static t_return	parse_precision(t_node *tmp, const char **fmt)
 {
 	int	precision;
 
-	if (fmt[0] == NULL || fmt[0][0] == '\0' || fmt[0][1] == '\0')
+	if (fmt[0] == NULL || fmt[0][0] == '\0')
 		return (FAIL);
 	if (fmt[0][0] == '.')
 		++fmt[0];
@@ -62,7 +62,7 @@ static t_return	parse_precision(t_node *tmp, const char **fmt)
 		return (SUCCESS);
 	precision = ft_atoi(fmt[0]);
 	if (precision < 0)
-		return (FAIL);
+		return (SUCCESS);
 	tmp->prcsn = (uint32_t)precision;
 	tmp->is_prcsn_def = true;
 	while (ft_isdigit(fmt[0][0]))
