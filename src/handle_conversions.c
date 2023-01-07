@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:44:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/01/06 12:54:24 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/01/07 10:31:28 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static t_return	handle_percent_conversion(t_node *tmp)
 
 t_return	handle_conversions(int *total_bytes, t_node *chunks_list)
 {
-
 	while (total_bytes != NULL && chunks_list != NULL)
 	{
 		if (chunks_list->conv == 0 && chunks_list->res.s == NULL)

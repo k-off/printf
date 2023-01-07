@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 08:50:56 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/01/06 12:18:36 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/01/07 10:38:49 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ static t_return	handle_integer_width(t_node *tmp)
 	char	*padding;
 
 	padding = NULL;
+	if (tmp->width > tmp->res.len && numeric_base(tmp->conv) != 10 && \
+			tmp->v.u64 != 0 && tmp->flags[0] == HASH)
+		tmp->width -= (numeric_base(tmp->conv) / 8);
 	if (tmp->width > tmp->res.len)
 	{
 		if (tmp->flags[1] != ZERO)

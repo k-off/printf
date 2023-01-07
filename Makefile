@@ -57,7 +57,7 @@ so:
 
 re: fclean all
 
-test: re
+test: all
 	@$(CC) -I$(HDR) -c tests/main.c -o obj/main.o
 	@$(CC) -o test obj/main.o libftprintf.a
 
