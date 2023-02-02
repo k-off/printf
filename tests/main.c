@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:12:06 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/01/06 13:18:23 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/02 19:06:13 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -430,7 +430,15 @@ int main() {
 	// ft_printf(" %p %p \n", ULONG_MAX, -ULONG_MAX);
 	// ft_printf(" %p %p \n", 0, 0);
 	// ft_printf(" = %d\n",ft_printf("%%"));
-	ft_printf("%%");
-	return (0);
+
+	// ft_printf(" = %d\n", ft_printf("' %-1c %-2c %-3c'", '0', 0, '1'));
+	// ft_printf(" = %d\n", ft_printf("' %-1c %-2c %-3c'", '2', '1', 0));
+	// ft_printf("===================\n");
+	// printf(" = %d\n", printf("' %-1c %-2c %-3c'", '0', 0, '1'));
+	// printf(" = %d\n", printf("' %-1c %-2c %-3c'", '2', '1', 0));
+
+	ft_printf("'%.9s'\n", NULL);
+	printf("'%.6s'\n", NULL);
+	return (FAIL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 08:50:56 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/01/07 10:38:49 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/02 20:04:57 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,15 @@ static t_return	get_unsigned(t_node *tmp, int bs, t_bool up, int8_t sep)
 	return (SUCCESS);
 }
 
+static void	swap_minus(t_node *tmp, char *padding)
+{
+	if (padding[0] == '0' && tmp->res.s[0] == '-')
+	{
+		tmp->res.s[0] = '0';
+		padding[0] = '-';
+	}
+}
+
 static t_return	handle_integer_width(t_node *tmp)
 {
 	char	*padding;
@@ -69,12 +78,13 @@ static t_return	handle_integer_width(t_node *tmp)
 		tmp->width -= (numeric_base(tmp->conv) / 8);
 	if (tmp->width > tmp->res.len)
 	{
-		if (tmp->flags[1] != ZERO)
-			padding = ft_stralloc(' ', tmp->width - tmp->res.len);
-		else
+		if (tmp->flags[1] == ZERO && tmp->is_prcsn_def == false)
 			padding = ft_stralloc('0', tmp->width - tmp->res.len);
+		else
+			padding = ft_stralloc(' ', tmp->width - tmp->res.len);
 		if (padding == NULL)
 			return (FAIL);
+		swap_minus(tmp, padding);
 		tmp->res.len = tmp->width;
 	}
 	if (tmp->flags[1] == MINUS)
@@ -88,6 +98,8 @@ static t_return	handle_integer_width(t_node *tmp)
 
 static t_return	get_integer_string(t_node *tmp, int bs, t_bool up, int8_t sep)
 {
+	char	*precision;
+
 	if (tmp->conv == 0 || ft_strchr("diouxXp", tmp->conv) == NULL)
 		return (FAIL);
 	if ((tmp->conv == 'd' || tmp->conv == 'i') && \
@@ -97,14 +109,15 @@ static t_return	get_integer_string(t_node *tmp, int bs, t_bool up, int8_t sep)
 										get_unsigned(tmp, bs, up, sep) == FAIL)
 		return (FAIL);
 	tmp->res.len = ft_strlen(tmp->res.s);
-	if (tmp->is_prcsn_def == true && tmp->prcsn > tmp->res.len)
+	if (tmp->is_prcsn_def == true && tmp->prcsn > (tmp->res.len - \
+													(tmp->res.s[0] == '-')))
 	{
-		tmp->res.s = string_joiner(2, \
-			ft_stralloc('0', tmp->prcsn - tmp->res.len), tmp->res.s);
+		tmp->res.len -= (tmp->res.s[0] == '-');
+		precision = ft_stralloc('0', tmp->prcsn - tmp->res.len);
+		swap_minus(tmp, precision);
+		tmp->res.s = string_joiner(2, precision, tmp->res.s);
 		tmp->res.len = tmp->prcsn;
 	}
-	if (handle_integer_width(tmp) == FAIL)
-		return (FAIL);
 	return (SUCCESS);
 }
 
@@ -113,9 +126,9 @@ t_return	handle_integer_conversion(t_node *tmp)
 	if (get_integer_string(tmp, numeric_base(tmp->conv), tmp->conv == 'X', \
 					(numeric_base(tmp->conv) == 10) * tmp->flags[3]) == FAIL)
 		return (FAIL);
-	if (tmp->flags[0] == HASH && tmp->conv == 'x')
+	if (tmp->flags[0] == HASH && tmp->conv == 'x' && tmp->res.s[0] != '0')
 		tmp->res.s = string_joiner(2, ft_strdup("0x"), tmp->res.s);
-	if (tmp->flags[0] == HASH && tmp->conv == 'X')
+	if (tmp->flags[0] == HASH && tmp->conv == 'X' && tmp->res.s[0] != '0')
 		tmp->res.s = string_joiner(2, ft_strdup("0X"), tmp->res.s);
 	if (tmp->flags[0] == HASH && tmp->conv == 'o' && tmp->res.s[0] != '0')
 		tmp->res.s = string_joiner(2, ft_strdup("0"), tmp->res.s);
@@ -126,6 +139,10 @@ t_return	handle_integer_conversion(t_node *tmp)
 			ft_isdigit(tmp->res.s[0]))
 		tmp->res.s = string_joiner(2, ft_strdup("+"), tmp->res.s);
 	if (tmp->res.s == NULL)
+		return (FAIL);
+	if (ft_strchr("xXo", tmp->conv) == NULL)
+		tmp->res.len = ft_strlen(tmp->res.s);
+	if (handle_integer_width(tmp) == FAIL)
 		return (FAIL);
 	tmp->res.len = ft_strlen(tmp->res.s);
 	return (SUCCESS);

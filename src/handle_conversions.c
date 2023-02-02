@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:44:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/01/07 10:31:28 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/02 19:57:04 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,18 @@ static t_return	handle_pointer_conversion(t_node *tmp)
 {
 	if (tmp->v.u64 == 0)
 	{
-		tmp->res.s = ft_strdup("(nil)");
-		tmp->res.len = 5;
+		if (tmp->is_prcsn_def == false || tmp->prcsn > 4)
+			tmp->res.s = ft_strdup("(nil)");
+		else
+			tmp->res.s = ft_strdup("");
+		tmp->res.len = ft_strlen(tmp->res.s);
+		if (tmp->width > tmp->res.len && tmp->flags[1] == MINUS)
+			tmp->res.s = string_joiner(2, tmp->res.s, \
+				ft_stralloc(' ', tmp->width - tmp->res.len));
+		if (tmp->width > tmp->res.len && tmp->flags[1] != MINUS)
+			tmp->res.s = string_joiner(2, ft_stralloc(' ', \
+				tmp->width - tmp->res.len), tmp->res.s);
+		tmp->res.len = ft_strlen(tmp->res.s);
 	}
 	else
 	{
@@ -37,22 +47,18 @@ static t_return	handle_pointer_conversion(t_node *tmp)
 
 static t_return	handle_character_conversion(t_node *tmp)
 {
-	char	str[2];
-	char	*width;
-
-	str[0] = (int8_t)tmp->v.u32;
-	str[1] = '\0';
-	width = NULL;
 	tmp->res.len = 1;
 	if (tmp->width > 1)
 	{
-		width = ft_stralloc(' ', tmp->width - 1);
+		tmp->res.s = ft_stralloc(' ', tmp->width);
 		tmp->res.len = tmp->width;
+		if (tmp->flags[1] == MINUS)
+			tmp->res.s[0] = (int8_t)tmp->v.u32;
+		else
+			tmp->res.s[tmp->res.len - 1] = (int8_t)tmp->v.u32;
 	}
-	if (tmp->flags[1] == '-')
-		tmp->res.s = string_joiner(2, ft_strdup(str), width);
 	else
-		tmp->res.s = string_joiner(2, width, ft_strdup(str));
+		tmp->res.s = ft_stralloc((int8_t)tmp->v.u32, tmp->res.len);
 	return (SUCCESS);
 }
 

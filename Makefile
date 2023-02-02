@@ -58,7 +58,7 @@ so:
 re: fclean all
 
 test: all
-	@$(CC) -I$(HDR) -c tests/main.c -o obj/main.o
+	@$(CC)  -g3 -I$(HDR) -c tests/main.c -o obj/main.o
 	@$(CC) -o test obj/main.o libftprintf.a
 
 memcheck: test

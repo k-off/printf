@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 08:29:17 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/31 08:45:06 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/02 19:08:34 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static t_return	handle_string_precision(t_node *tmp)
 {
 	if (tmp->v.ptr == NULL)
 	{
-		if (tmp->is_prcsn_def == true)
+		if (tmp->is_prcsn_def == true && tmp->prcsn < 6)
 			tmp->res.s = ft_strdup("");
 		else
 			tmp->res.s = ft_strdup("(null)");

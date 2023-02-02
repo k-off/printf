@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 22:38:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/31 09:17:21 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/01/07 11:31:23 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*string_joiner(size_t n, ...)
 	ret = ft_memalloc(total_len + 1);
 	if (join_and_free(ret, arr, total_len + 1, n) == FAIL)
 	{
-		free(ret);
+		free (ret);
 		ret = 0;
 	}
 	free (arr);
