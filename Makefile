@@ -13,7 +13,7 @@ SRCDIR=src
 SRC= manage_memory.c ft_ntoa_base.c ft_printf.c string_joiner.c \
 	ft_dbltostr_base.c parse_format.c parse_format_utils.c \
 	handle_conversions.c handle_double_conversion.c handle_string_conversion.c \
-	handle_integer_conversion.c
+	handle_integer_conversion.c handle_double_utils.c
 
 BSRC = 
 

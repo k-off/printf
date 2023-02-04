@@ -6,15 +6,14 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:44:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/02/02 19:57:04 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/04 08:55:27 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
 t_return	handle_string_conversion(t_node *tmp);
-t_return	handle_doubles_other(t_node *tmp);
-t_return	handle_doubles_aa(t_node *tmp);
+t_return	handle_double_conversion(t_node *tmp);
 t_return	handle_integer_conversion(t_node *tmp);
 
 static t_return	handle_pointer_conversion(t_node *tmp)
@@ -85,10 +84,8 @@ t_return	handle_conversions(int *total_bytes, t_node *chunks_list)
 			handle_character_conversion(chunks_list);
 		else if (chunks_list->conv == 'p')
 			handle_pointer_conversion(chunks_list);
-		else if (ft_strchr("aA", chunks_list->conv))
-			handle_doubles_aa(chunks_list);
-		else if (ft_strchr("eEfFgG", chunks_list->conv))
-			handle_doubles_other(chunks_list);
+		else if (ft_strchr("eEfFgGaA", chunks_list->conv))
+			handle_double_conversion(chunks_list);
 		else if (chunks_list->conv == '%')
 			handle_percent_conversion(chunks_list);
 		else

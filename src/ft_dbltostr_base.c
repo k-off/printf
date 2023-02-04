@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 14:09:41 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/02/02 20:10:39 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/04 13:02:32 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,17 @@ static char	*dbl_decpart(long double n, int base, t_bool upper, uint64_t prec)
 
 	zeros_before = 0;
 	n -= (uint64_t)n;
-	while ((int)(n * 10) == 0 && prec--)
+	while ((int)(n * base) == 0 && prec--)
 	{
-		n *= 10;
+		n *= base;
 		++zeros_before;
 	}
+	if ((int)(n) == 0 && (long)prec < 1 && zeros_before > 0)
+		--zeros_before;
 	r = NULL;
 	lim = 19;
 	while (prec && lim)
-		n *= (10 * (prec-- >= 1 && lim-- > 1));
+		n *= (base * (prec-- >= 1 && lim-- > 1));
 	r = string_joiner(2, r, ulltoa_base((uint64_t)n, base, upper, prec));
 	return (string_joiner(3, ft_stralloc('0', zeros_before), r, \
 							ft_stralloc('0', prec)));
