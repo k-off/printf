@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:44:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/02/04 13:55:27 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/04 19:37:57 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_return	handle_e(t_node *tmp)
 {
 	int			exp;
 	long double	n;
-	
+
 	if (get_exponent(tmp, &exp, &n, 10) == FAIL)
 		return (FAIL);
 	tmp->res.s = dbltostr_base(n, 10, false, tmp->prcsn);
@@ -76,14 +76,14 @@ t_return	handle_a(t_node *tmp)
 {
 	int			exp;
 	long double	n;
-	
+
 	if (get_exponent(tmp, &exp, &n, 2) == FAIL)
 		return (FAIL);
 	if (n < 0)
 		tmp->res.s = ft_strdup("-");
 	if (n < 0)
 		n = -n;
-	if (tmp->conv  == 'A')
+	if (tmp->conv == 'A')
 		tmp->res.s = string_joiner(4, tmp->res.s, ft_strdup("0X"), \
 					dbltostr_base(n, 16, false, tmp->prcsn), ft_strdup("P"));
 	else

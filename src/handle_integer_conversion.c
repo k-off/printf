@@ -6,11 +6,12 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 08:50:56 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/02/02 20:04:57 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/04 19:36:59 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+#include <stdio.h>
 
 static int	numeric_base(uint8_t conversion)
 {
@@ -61,11 +62,56 @@ static t_return	get_unsigned(t_node *tmp, int bs, t_bool up, int8_t sep)
 
 static void	swap_minus(t_node *tmp, char *padding)
 {
-	if (padding[0] == '0' && tmp->res.s[0] == '-')
+	char	*pos;
+
+	if (padding && padding[0] == '0')
 	{
-		tmp->res.s[0] = '0';
-		padding[0] = '-';
+		pos = ft_strchr("+- ", tmp->res.s[0]);
+		if (pos != NULL)
+		{
+			padding[0] = tmp->res.s[0];
+			tmp->res.s[0] = '0';
+		}
+		pos = ft_strchr(tmp->res.s, 'x');
+		if (pos == NULL)
+			pos = ft_strchr(tmp->res.s, 'X');
+		if (pos != NULL)
+		{
+			if (ft_strlen(padding) > 1)
+				padding[1 + (ft_strchr("+- ", tmp->res.s[0]) != NULL)] = pos[0];
+			else
+				tmp->res.s[0] = pos[0];
+			pos[0] = '0';
+		}
 	}
+}
+
+t_return	xxo_hash_padding(t_node *tmp, char **pad)
+{
+	char	*suf;
+
+	if (tmp->v.u64 != 0 && tmp->flags[0] == HASH && ft_strchr("xXo", tmp->conv))
+	{
+		suf = ft_stralloc('0', 2 - (tmp->conv == 'o'));
+		if (tmp->conv == 'x')
+			suf[1] = 'x';
+		else if (tmp->conv == 'X')
+			suf[1] = 'X';
+		if (ft_strnstr(tmp->res.s, "0X", 5) == NULL && \
+			ft_strnstr(tmp->res.s, "0x", 5) == NULL)
+		{
+			if (tmp->flags[1] == MINUS || pad[0] == NULL || pad[0][0] == ' ')
+				tmp->res.s = string_joiner(2, suf, tmp->res.s);
+			else if (pad[0] == NULL)
+				pad[0] = suf;
+			else if (pad[0][0] == '0')
+				pad[0] = string_joiner(2, suf, pad[0]);
+		}
+		else
+			free(suf);
+	}
+	swap_minus(tmp, *pad);
+	return (SUCCESS);
 }
 
 static t_return	handle_integer_width(t_node *tmp)
@@ -84,10 +130,9 @@ static t_return	handle_integer_width(t_node *tmp)
 			padding = ft_stralloc(' ', tmp->width - tmp->res.len);
 		if (padding == NULL)
 			return (FAIL);
-		swap_minus(tmp, padding);
 		tmp->res.len = tmp->width;
 	}
-	if (tmp->flags[1] == MINUS)
+	if (xxo_hash_padding(tmp, &padding) == SUCCESS && tmp->flags[1] == MINUS)
 		tmp->res.s = string_joiner(2, tmp->res.s, padding);
 	else
 		tmp->res.s = string_joiner(2, padding, tmp->res.s);
