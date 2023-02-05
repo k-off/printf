@@ -6,12 +6,18 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 14:25:44 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/02/05 08:03:29 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/05 09:59:18 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
+/**
+ * @brief Get numberic value of base from conversion character
+ * 
+ * @param conversion uint8_t, character value of conversion
+ * @return numeric value of base or FAIL (-1)
+*/
 int	numeric_base(uint8_t conversion)
 {
 	if (conversion == 0)
@@ -25,6 +31,13 @@ int	numeric_base(uint8_t conversion)
 	return (FAIL);
 }
 
+/**
+ * @brief Ugly but tested hack: move `+ -x` characters from number 
+ * 			string into padding string if it is set to zeroes and 
+ * 			is to the left from number string
+ * @param tmp *t_node, current conversion node
+ * @param padding *char, padding string
+*/
 void	swap_minus(t_node *tmp, char *padding)
 {
 	char	*pos;
@@ -51,6 +64,13 @@ void	swap_minus(t_node *tmp, char *padding)
 	}
 }
 
+/**
+ * @brief Ugly but tested hack for handling xXo conversions with padding
+ * 
+ * @param tmp *t_node, current conversion node
+ * @param pad **char, address of padding string to be allocated and set
+ * @return t_return SUCCESS(0) or FAIL(-1)
+*/
 t_return	xxo_hash_padding(t_node *tmp, char **pad)
 {
 	char	*suf;

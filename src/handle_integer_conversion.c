@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 08:50:56 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/02/05 08:04:08 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/05 09:49:31 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@ int			numeric_base(uint8_t conversion);
 void		swap_minus(t_node *tmp, char *padding);
 t_return	xxo_hash_padding(t_node *tmp, char **pad);
 
+/**
+ * @brief Convert signed integers depending on length modifiers hh, h, l, ll
+ * 
+ * @param tmp *t_node, current conversion node
+ * @param bs int, base of number (ie dec, hex)
+ * @param up bool, upper case flag for hex
+ * @param sep int8_t, character value of thousand separator (zero to skip)
+ * @return t_return SUCCESS(0) or FAIL(-1)
+*/
 static t_return	get_signed(t_node *tmp, int bs, t_bool up, int8_t sep)
 {
 	if (tmp->is_prcsn_def == true && tmp->prcsn == 0 && tmp->v.u64 == 0)
@@ -34,6 +43,15 @@ static t_return	get_signed(t_node *tmp, int bs, t_bool up, int8_t sep)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Convert unsigned integers depending on length modifiers hh, h, l, ll
+ * 
+ * @param tmp *t_node, current conversion node
+ * @param bs int, base of number (ie dec, hex)
+ * @param up bool, upper case flag for hex
+ * @param sep int8_t, character value of thousand separator (zero to skip)
+ * @return t_return SUCCESS(0) or FAIL(-1)
+*/
 static t_return	get_unsigned(t_node *tmp, int bs, t_bool up, int8_t sep)
 {
 	if (tmp->is_prcsn_def == true && tmp->prcsn == 0 && tmp->v.u64 == 0)
@@ -51,6 +69,12 @@ static t_return	get_unsigned(t_node *tmp, int bs, t_bool up, int8_t sep)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Handle width of field for integer number conversions
+ * 
+ * @param tmp *t_node, current conversion node
+ * @return t_return SUCCESS(0) or FAIL(-1)
+*/
 static t_return	handle_integer_width(t_node *tmp)
 {
 	char	*padding;
@@ -78,6 +102,15 @@ static t_return	handle_integer_width(t_node *tmp)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Convert an integer number into a string with params
+ * 
+ * @param tmp *t_node, current conversion node
+ * @param bs int, base of number (ie dec, hex)
+ * @param up bool, upper case flag for hex
+ * @param sep int8_t, character value of thousand separator (zero to skip)
+ * @return t_return SUCCESS(0) or FAIL(-1)
+*/
 static t_return	get_integer_string(t_node *tmp, int bs, t_bool up, int8_t sep)
 {
 	char	*precision;
@@ -103,6 +136,12 @@ static t_return	get_integer_string(t_node *tmp, int bs, t_bool up, int8_t sep)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Convert integer node value into a string
+ * 
+ * @param tmp *t_node, current conversion node
+ * @return t_return SUCCESS(0) or FAIL(-1)
+*/
 t_return	handle_integer_conversion(t_node *tmp)
 {
 	if (get_integer_string(tmp, numeric_base(tmp->conv), tmp->conv == 'X', \

@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:44:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/02/05 08:01:27 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/05 09:09:21 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,14 @@
 t_return	get_exponent(t_node *tmp, int *exp, long double *n, int base);
 t_return	handle_double_width(t_node *tmp);
 
-t_return	handle_f(t_node *tmp)
+/**
+ * @brief Handle fF conversion - convert float value of current node
+ * 			into a string result formatted as [+]ff.fffff
+ * 
+ * @param tmp *t_node, current conversion node
+ * @return t_return SUCCESS (0) or FAIL (-1)
+*/
+static t_return	handle_f(t_node *tmp)
 {
 	if (!tmp->is_prcsn_def)
 		tmp->prcsn = 6;
@@ -32,7 +39,14 @@ t_return	handle_f(t_node *tmp)
 	return (SUCCESS);
 }
 
-t_return	handle_e(t_node *tmp)
+/**
+ * @brief Handle eE conversion - convert float value of current node
+ * 			into a string result in exponential format [+]e.eee+dd
+ * 
+ * @param tmp *t_node, current conversion node
+ * @return t_return SUCCESS (0) or FAIL (-1)
+*/
+static t_return	handle_e(t_node *tmp)
 {
 	int			exp;
 	long double	n;
@@ -58,7 +72,17 @@ t_return	handle_e(t_node *tmp)
 	return (SUCCESS);
 }
 
-t_return	handle_g(t_node *tmp)
+/**
+ * @brief Handle gG conversion - convert float value of current node
+ * 			into a string result in exponential format [+]e.eee+dd 
+ * 			or float format [+]ff.ffffff depending on exponent and precision
+ * 			values. Doesnt entirely correspond to printf gG conversion - 
+ * 			no zero trimming
+ * 
+ * @param tmp *t_node, current conversion node
+ * @return t_return SUCCESS (0) or FAIL (-1)
+*/
+static t_return	handle_g(t_node *tmp)
 {
 	int			exp;
 	long double	n;
@@ -72,7 +96,17 @@ t_return	handle_g(t_node *tmp)
 	return (SUCCESS);
 }
 
-t_return	handle_a(t_node *tmp)
+/**
+ * @brief Handle aA conversion - convert float value of current node
+ * 			into a string result in exponential format as hexadecimal 
+ * 			[+]0xh.hhhhp+dd.
+ * 			L and ll length modifiers are not supported.
+ * 			Limited precision.
+ * 
+ * @param tmp *t_node, current conversion node
+ * @return t_return SUCCESS (0) or FAIL (-1)
+*/
+static t_return	handle_a(t_node *tmp)
 {
 	int			exp;
 	long double	n;
@@ -102,12 +136,11 @@ t_return	handle_a(t_node *tmp)
 }
 
 /**
- * @brief Convert data from the chunks list into string chunks and store total
- * 		bytes amount for doble numbers (a, A conversions not implemented)
+ * @brief Convert float/double node value into a string
  * 
- * @param tmp t_node*, current conversion node
- * @return t_return SUCCESS or FAIL
- */
+ * @param tmp *t_node, current conversion node
+ * @return t_return SUCCESS(0) or FAIL(-1)
+*/
 t_return	handle_double_conversion(t_node *tmp)
 {
 	if (ft_strchr("fF", tmp->conv))

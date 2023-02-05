@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:44:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/02/04 08:55:27 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/05 08:54:43 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ t_return	handle_string_conversion(t_node *tmp);
 t_return	handle_double_conversion(t_node *tmp);
 t_return	handle_integer_conversion(t_node *tmp);
 
+/**
+ * @brief Convert pointer node value into a string
+ * 
+ * @param tmp *t_node, current conversion node
+ * @return t_return SUCCESS(0) or FAIL(-1)
+*/
 static t_return	handle_pointer_conversion(t_node *tmp)
 {
 	if (tmp->v.u64 == 0)
@@ -44,6 +50,12 @@ static t_return	handle_pointer_conversion(t_node *tmp)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Convert character node value into a string
+ * 
+ * @param tmp *t_node, current conversion node
+ * @return t_return SUCCESS(0) or FAIL(-1)
+*/
 static t_return	handle_character_conversion(t_node *tmp)
 {
 	tmp->res.len = 1;
@@ -61,6 +73,12 @@ static t_return	handle_character_conversion(t_node *tmp)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Convert percent node value into a string
+ * 
+ * @param tmp *t_node, current conversion node
+ * @return t_return SUCCESS(0) or FAIL(-1)
+*/
 static t_return	handle_percent_conversion(t_node *tmp)
 {
 	tmp->res.s = ft_strdup("%");

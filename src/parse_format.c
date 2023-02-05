@@ -12,6 +12,13 @@
 
 #include "libftprintf.h"
 
+/**
+ * @brief Store parts of the format string that are not conversions into nodes
+ * 
+ * @param tmp *t_node, current conversion node
+ * @param fmt **char, current address in the format string
+ * @return t_return SUCCESS(0) or FAIL(-1) 
+*/
 static t_return	store_plain_part(t_node *tmp, const char **fmt)
 {
 	if (fmt[0] == NULL)

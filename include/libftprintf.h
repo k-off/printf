@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 21:04:21 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/02/04 12:52:45 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/05 08:54:38 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,9 +129,9 @@ t_return	release_conversions(t_node *chunks_list);
  * @brief Convert data from the chunks list into string chunks and store total
  * 		bytes amount
  * 
- * @param total_bytes int*, total bytes in the resulting string 
+ * @param total_bytes int*, total bytes in all resulting string chunks
  * @param chunks_list t_node*, list of plain and converted chunks
- * @return t_return SUCCESS or FAIL
+ * @return t_return SUCCESS (0) or FAIL (-1)
  */
 t_return	handle_conversions(int *total_bytes, t_node *chunks_list);
 

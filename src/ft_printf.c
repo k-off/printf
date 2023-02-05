@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:44:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2022/12/31 09:12:40 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/05 08:42:04 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,18 @@ int	ft_sprintf(char **str, const char *s, ...)
 int	ft_vdprintf(int fd, const char *s, va_list ap)
 {
 	int		res;
+	int		actual;
 	char	*str;
 
 	str = NULL;
 	res = ft_vsprintf(&str, s, ap);
+	actual = res;
 	if (res > 0 && str != NULL)
-		write(fd, str, res);
+		actual = write(fd, str, res);
 	if (str != NULL)
 		free (str);
+	if (actual != res)
+		return (FAIL);
 	return (res);
 }
 
