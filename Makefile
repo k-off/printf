@@ -1,63 +1,62 @@
-NAME=libftprintf.a
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/02/08 17:11:15 by pcovalio          #+#    #+#              #
+#    Updated: 2023/02/08 18:09:31 by pcovalio         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-CFLAGS=-Wall -Wextra -Werror -pedantic $(BONUSFLAG) -g3
+NAME		= libftprintf.a
+INCLUDE		= include
+LIBFT		= libft
+SRC_DIR		= src/
+OBJ_DIR		= obj/
+CFLAGS		= -Wall -Wextra -Werror -pedantic -o3
+RM			= rm -f
+AR			= ar rcs
 
-AR=ar -rc
+#Sources
 
-BONUSFLAG=
-BSUF=
-HDR=-Iinclude -Ilibft/include -I.
-OBJDIR=obj
-SRCDIR=src
+SRC_FILES	=	manage_memory ft_ntoa_base ft_printf string_joiner \
+	ft_dbltostr_base parse_format parse_format_utils \
+	handle_conversions handle_double_conversion handle_string_conversion \
+	handle_integer_conversion handle_double_utils handle_integer_utils
 
-SRC= manage_memory.c ft_ntoa_base.c ft_printf.c string_joiner.c \
-	ft_dbltostr_base.c parse_format.c parse_format_utils.c \
-	handle_conversions.c handle_double_conversion.c handle_string_conversion.c \
-	handle_integer_conversion.c handle_double_utils.c handle_integer_utils.c
+SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
+OBJ 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
 
-BSRC = 
+###
 
-OBJ=$(SRC:%.c=$(OBJDIR)/%.o)
+OBJF		=	.cache_exists
 
-BOBJ=$(BSRC:%.c=$(OBJDIR)/%.o)
+all:		$(NAME)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@mkdir -p '$(@D)'
-	$(CC) $(CFLAGS) $(HDR) -c $< -o $@
+$(NAME):	$(OBJ)
+			@make -C $(LIBFT)
+			@cp libft/libft.a .
+			@mv libft.a $(NAME)
+			@$(AR) $(NAME) $(OBJ)
 
-all: $(NAME)
-$(NAME):$(OBJ)
-	make all -C libft
-	$(AR) ftprintf.a $^
-	mv libft/libft.a libft.a
-	$(AR)T $(NAME) ftprintf.a libft.a
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
+			$(CC) $(CFLAGS) -I$(INCLUDE) -Ilibft/include -c $< -o $@
 
-bonus: BONUSFLAG=-DBONUS
-BSUF=_bonus
-
-bonus: $(OBJ) $(BOBJ)
-	make all -C libft
-	$(AR) ftprintf.a $^
-	mv libft/libft.a libft.a
-	$(AR)T $(NAME) ftprintf.a libft.a
+$(OBJF):
+			@mkdir -p $(OBJ_DIR)
 
 clean:
-	make clean -C libft
-	rm -rf $(OBJDIR)
-	rm -f  ftprintf.a libft.a
+			@$(RM) -rf $(OBJ_DIR)
+			@make clean -C $(LIBFT)
 
-fclean: clean
-	make fclean -C libft
-	rm -f $(NAME)
-	rm -f test
+fclean:		clean
+			@$(RM) -f $(NAME)
+			@$(RM) -f $(LIBFT)/libft.a
 
-re: fclean all
+re:			fclean all
 
-test: all
-	@$(CC)  -g3 -I$(HDR) -c tests/main.c -o obj/main.o
-	@$(CC) -o test obj/main.o libftprintf.a
+bonus: all
 
-memcheck: test
-	valgrind --leak-check=full --leak-resolution=high --show-leak-kinds=all ./test
-
-.PHONY: all clean fclean re bonus
+.PHONY:		all clean fclean re bonus

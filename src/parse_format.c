@@ -56,12 +56,6 @@ static t_return	get_from_va_list(t_node *tmp, va_list ap)
 		get_float(tmp, ap);
 	else if (tmp->conv == 's' || tmp->conv == 'p')
 		tmp->v.ptr = va_arg(ap, void *);
-	else if (tmp->conv == '%')
-	{
-		if (tmp->flags != NO_FLAG || tmp->width != 0 || \
-			tmp->prcsn != 0 || tmp->ln_md != NO_MOD)
-			return (FAIL);
-	}
 	else if (tmp->conv != 0 && ft_strchr("cdiouxX", tmp->conv) != NULL)
 		get_int(tmp, ap);
 	else if (tmp->conv != 0)

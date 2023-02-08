@@ -6,7 +6,7 @@
 /*   By: pcovalio <pcovalio@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:44:52 by pcovalio          #+#    #+#             */
-/*   Updated: 2023/02/05 08:42:04 by pcovalio         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:12:33 by pcovalio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	ft_vsprintf(char **return_string, const char *format, va_list ap)
 	t_return	status;
 
 	return_string[0] = NULL;
+	if (format == NULL)
+		return (0);
 	total_bytes = 0;
 	status = FAIL;
 	if (parse_format(&chunks_list, format, ap) == SUCCESS)
